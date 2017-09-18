@@ -1,0 +1,20 @@
+{
+  "name": "generator-springbootscala",
+  "version": "0.0.1",
+  "description": "Spring boot scala generator",
+  "files": [
+    "generators"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parthmistry/generator-springbootscala.git"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Parth Mistry",
+  "license": "ISC",
+  "dependencies": {
+    "yeoman-generator": "^1.0.0"
+  }
+}
