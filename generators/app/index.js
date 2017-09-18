@@ -55,6 +55,11 @@ writing() {
       this.destinationPath('src/main/scala/' + this.packagedir + '/' + this.capitalizedProjectName + 'Application.scala'),
       this.templateProperites
     );
+  this.fs.copyTpl(
+      this.templatePath('src/main/scala/apppackage/config/WebConfig.scala'),
+      this.destinationPath('src/main/scala/' + this.packagedir + '/config/WebConfig.scala'),
+      this.templateProperites
+    );
   if(this.userinput.samplecontroller) {
   this.fs.copyTpl(
       this.templatePath('src/main/scala/apppackage/web/rest/SampleController.scala'),

@@ -5,9 +5,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet author="Admin" id="00000000000001">
-        <createTable tableName="test">
-            <column name="column1" type="varchar(255)" />
-        </createTable>
+        
     </changeSet>
 
 </databaseChangeLog>
