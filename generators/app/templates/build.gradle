@@ -22,13 +22,14 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile 'org.scala-lang:scala-library:2.11.8'
-	compile 'org.springframework.boot:spring-boot-starter-web'
-	<% if (RDBMS !== 'None') { %>compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'org.springframework.boot:spring-boot-starter-web'<% if (RDBMS !== 'None') { %>
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.liquibase:liquibase-core:3.5.3'
-	<% if (RDBMS === 'Mysql') { %>compile 'mysql:mysql-connector-java:5.1.6'<% } %><% } %>
-	compile "com.fasterxml.jackson.module:jackson-module-scala_2.11:2.8.9"
+	<% if (RDBMS === 'Mysql') { %>compile 'mysql:mysql-connector-java:5.1.6'<% } %><% } %><% if (AUTH !== 'None') { %>
+	compile 'org.springframework.boot:spring-boot-starter-security'
+	<% if (AUTH === 'JWT') { %>compile 'io.jsonwebtoken:jjwt:0.7.0'<% } %><% } %>
+	compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.8.9'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -5,6 +5,7 @@ import <%= PACKAGE%>.service.SampleService
 import org.springframework.web.bind.annotation.{RequestMapping, RequestParam, RestController}
 
 @RestController
+@RequestMapping(Array("/api"))
 class SampleController @Autowired() (private val sampleService: SampleService) {
 
   @RequestMapping(Array("/sample"))
