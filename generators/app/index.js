@@ -103,6 +103,12 @@ module.exports = class extends Generator {
 			if (this.templateProperites.AUTH === 'JWT') {
 				this.copyTpl('src/main/scala/apppackage/config/JWTSecurityConfig.scala',
 					'src/main/scala/' + this.packagedir + '/config/SecurityConfig.scala');
+				this.copyTpl('src/main/scala/apppackage/web/rest/vm/user/LoginVM.scala',
+					'src/main/scala/' + this.packagedir + '/web/rest/vm/user/LoginVM.scala');
+				this.copyTpl('src/main/scala/apppackage/web/rest/vm/user/LoginResponseVM.scala',
+					'src/main/scala/' + this.packagedir + '/web/rest/vm/user/LoginResponseVM.scala');
+				this.copyTpl('src/main/scala/apppackage/web/rest/UsersController.scala',
+					'src/main/scala/' + this.packagedir + '/web/rest/UsersController.scala');
 				this.copyTpl('src/main/scala/apppackage/security/jwt',
 					'src/main/scala/' + this.packagedir + '/security/jwt');
 			}
