@@ -101,16 +101,37 @@ module.exports = class extends Generator {
 
 		if (this.templateProperites.AUTH !== 'None') {
 			if (this.templateProperites.AUTH === 'JWT') {
-				this.copyTpl('src/main/scala/apppackage/config/JWTSecurityConfig.scala',
-					'src/main/scala/' + this.packagedir + '/config/SecurityConfig.scala');
+				if(this.templateProperites.RDBMS !== 'None') {
+					this.copyTpl('src/main/scala/apppackage/config/JWTDBSecurityConfig.scala',
+						'src/main/scala/' + this.packagedir + '/config/SecurityConfig.scala');
+					this.copyTpl('src/main/scala/apppackage/security/jwt/JWTUserDetailService.scala',
+						'src/main/scala/' + this.packagedir + '/security/jwt/JWTUserDetailService.scala');
+
+					this.copyTpl('src/main/scala/apppackage/domain/User.scala',
+						'src/main/scala/' + this.packagedir + '/domain/User.scala');
+					this.copyTpl('src/main/scala/apppackage/domain/Authority.scala',
+						'src/main/scala/' + this.packagedir + '/domain/Authority.scala');
+
+					this.copyTpl('src/main/scala/apppackage/repository/UserRepository.scala',
+						'src/main/scala/' + this.packagedir + '/repository/UserRepository.scala');
+					this.copyTpl('src/main/scala/apppackage/repository/AuthorityRepository.scala',
+						'src/main/scala/' + this.packagedir + '/repository/AuthorityRepository.scala');
+				} else {
+					this.copyTpl('src/main/scala/apppackage/config/JWTMemSecurityConfig.scala',
+						'src/main/scala/' + this.packagedir + '/config/SecurityConfig.scala');
+				}
 				this.copyTpl('src/main/scala/apppackage/web/rest/vm/user/LoginVM.scala',
 					'src/main/scala/' + this.packagedir + '/web/rest/vm/user/LoginVM.scala');
 				this.copyTpl('src/main/scala/apppackage/web/rest/vm/user/LoginResponseVM.scala',
 					'src/main/scala/' + this.packagedir + '/web/rest/vm/user/LoginResponseVM.scala');
 				this.copyTpl('src/main/scala/apppackage/web/rest/UsersController.scala',
 					'src/main/scala/' + this.packagedir + '/web/rest/UsersController.scala');
-				this.copyTpl('src/main/scala/apppackage/security/jwt',
-					'src/main/scala/' + this.packagedir + '/security/jwt');
+				
+				this.copyTpl('src/main/scala/apppackage/security/jwt/JWTAuthenticationFilter.scala',
+					'src/main/scala/' + this.packagedir + '/security/jwt/JWTAuthenticationFilter.scala');
+				this.copyTpl('src/main/scala/apppackage/security/jwt/TokenAuthenticationService.scala',
+					'src/main/scala/' + this.packagedir + '/security/jwt/TokenAuthenticationService.scala');
+				
 			}
 		}
 	}

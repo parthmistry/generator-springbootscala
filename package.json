@@ -1,7 +1,7 @@
 {
   "name": "generator-springbootscala",
-  "version": "0.0.4",
-  "description": "Spring boot scala generator",
+  "version": "0.0.5",
+  "description": "Spring boot application generator for scala language",
   "files": [
     "generators"
   ],
