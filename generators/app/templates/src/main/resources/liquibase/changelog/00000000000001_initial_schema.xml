@@ -42,7 +42,16 @@
                                  baseTableName="user_authorities"
                                  constraintName="fk_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="users"/><% } %>
+                                 referencedTableName="users"/>
+
+        <loadData file="liquibase/authorities.csv"
+                  tableName="authorities"/>
+
+        <loadData file="liquibase/users.csv"
+                  tableName="users"/>
+
+        <loadData file="liquibase/user_authorities.csv"
+                  tableName="user_authorities"/><% } %>
     </changeSet>
 
 </databaseChangeLog>

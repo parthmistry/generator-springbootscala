@@ -22,8 +22,8 @@ class SecurityConfig @Autowired()(tokenAuthenticationService: TokenAuthenticatio
   @PostConstruct def init(): Unit = {
       authenticationManagerBuilder.inMemoryAuthentication()
         .withUser("admin")
-        .password("password")
-        .roles("ADMIN")
+        .password("admin")
+        .roles("ROLE_ADMIN")
   }
 
   override def configure(web: WebSecurity): Unit = {

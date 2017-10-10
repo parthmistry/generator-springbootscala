@@ -1,0 +1,2 @@
+id,username,password_hash,created_date,last_modified_date
+1,admin,$2a$06$wLybQvnX80epwPdVjF/P1OwG7k03b77AYDzEnPe5l47BRUHOmCeti,now(),now()
