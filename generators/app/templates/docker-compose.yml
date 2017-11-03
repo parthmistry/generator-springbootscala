@@ -1,0 +1,19 @@
+version: "3"
+services:
+  <%= NAME %>-app:
+    image: <%= NAME %>
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod<% if (RDBMS === 'Mysql') { %>
+      - SPRING_DATASOURCE_URL=jdbc:mysql://<%= NAME %>-mysql:3306/<%= NAME %>db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=<% } %>
+    ports:
+      - 8080:8080<% if (RDBMS === 'Mysql') { %>
+  <%= NAME %>-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=<%= NAME %>db
+    ports:
+      - 3306:3306<% } %>

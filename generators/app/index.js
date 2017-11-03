@@ -53,7 +53,13 @@ module.exports = class extends Generator {
 			{
 				type : 'confirm',
 				name : 'samplecontroller',
-				message : 'Do you want us to create sample rest controller?',
+				message : 'Do you want to create sample rest controller?',
+				default : false
+			},
+			{
+				type : 'confirm',
+				name : 'docker',
+				message : 'Do you want to generate docker configuration?',
 				default : false
 			} ]).then((answers) => {
 			this.userinput = answers;
@@ -65,7 +71,8 @@ module.exports = class extends Generator {
 				CAPITALIZED_NAME : this.capitalizedProjectName,
 				PACKAGE : this.userinput.package,
 				RDBMS : this.userinput.rdbms,
-				AUTH : this.userinput.auth
+				AUTH : this.userinput.auth,
+				DOCKER : this.userinput.docker
 			};
 
 		});
@@ -133,6 +140,13 @@ module.exports = class extends Generator {
 					'src/main/scala/' + this.packagedir + '/security/jwt/TokenAuthenticationService.scala');
 				
 			}
+		}
+
+		if(this.userinput.docker) {
+			this.copyTpl('Dockerfile',
+				'Dockerfile');
+			this.copyTpl('docker-compose.yml',
+				'docker-compose.yml');
 		}
 	}
 
