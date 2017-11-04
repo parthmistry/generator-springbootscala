@@ -1,7 +1,7 @@
 <% if (DOCKER) {%>import org.apache.tools.ant.taskdefs.condition.Os<% } %>
 buildscript {
 	ext {
-		springBootVersion = '1.5.6.RELEASE'
+		springBootVersion = '1.5.8.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -24,14 +24,14 @@ repositories {
 }
 
 dependencies {
-	compile 'org.scala-lang:scala-library:2.11.8'
+	<% if (SCALA_VERSION === '2.11') { %>compile 'org.scala-lang:scala-library:2.11.8'<% } else { %>compile 'org.scala-lang:scala-library:2.12.4'<% } %>
 	compile 'org.springframework.boot:spring-boot-starter-web'<% if (RDBMS !== 'None') { %>
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.liquibase:liquibase-core:3.5.3'
 	<% if (RDBMS === 'Mysql') { %>compile 'mysql:mysql-connector-java:5.1.6'<% } %><% } %><% if (AUTH !== 'None') { %>
 	compile 'org.springframework.boot:spring-boot-starter-security'
 	<% if (AUTH === 'JWT') { %>compile 'io.jsonwebtoken:jjwt:0.7.0'<% } %><% } %>
-	compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.8.9'
+	compile 'com.fasterxml.jackson.module:jackson-module-scala_<%= SCALA_VERSION %>:2.8.9'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 

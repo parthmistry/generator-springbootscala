@@ -38,6 +38,13 @@ module.exports = class extends Generator {
 			},
 			{
 				type : 'list',
+				name : 'scalaversion',
+				message : 'Which scala version you want to configure for your project?',
+				choices : [ '2.11', '2.12' ],
+				default : '2.11'
+			},
+			{
+				type : 'list',
 				name : 'rdbms',
 				message : 'Which relational database you want to configure for your project?',
 				choices : [ 'None', 'Mysql' ],
@@ -49,12 +56,6 @@ module.exports = class extends Generator {
 				message : 'Which authentication mechanism you want to configure for your project?',
 				choices : [ 'None', 'JWT' ],
 				default : 'None'
-			},
-			{
-				type : 'confirm',
-				name : 'samplecontroller',
-				message : 'Do you want to create sample rest controller?',
-				default : false
 			},
 			{
 				type : 'confirm',
@@ -72,7 +73,8 @@ module.exports = class extends Generator {
 				PACKAGE : this.userinput.package,
 				RDBMS : this.userinput.rdbms,
 				AUTH : this.userinput.auth,
-				DOCKER : this.userinput.docker
+				DOCKER : this.userinput.docker,
+				SCALA_VERSION : this.userinput.scalaversion
 			};
 
 		});
@@ -91,12 +93,10 @@ module.exports = class extends Generator {
 		this.copyTpl('src/main/scala/apppackage/config/WebConfig.scala',
 			'src/main/scala/' + this.packagedir + '/config/WebConfig.scala');
 
-		if (this.userinput.samplecontroller) {
-			this.copyTpl('src/main/scala/apppackage/web/rest/SampleController.scala',
-				'src/main/scala/' + this.packagedir + '/web/rest/SampleController.scala');
-			this.copyTpl('src/main/scala/apppackage/service/SampleService.scala',
-				'src/main/scala/' + this.packagedir + '/service/SampleService.scala');
-		}
+		this.copyTpl('src/main/scala/apppackage/web/rest/SampleController.scala',
+			'src/main/scala/' + this.packagedir + '/web/rest/SampleController.scala');
+		this.copyTpl('src/main/scala/apppackage/service/SampleService.scala',
+			'src/main/scala/' + this.packagedir + '/service/SampleService.scala');
 
 		this.copyTpl('src/main/resources/application.yml',
 			'src/main/resources/application.yml');
