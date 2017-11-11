@@ -100,6 +100,8 @@ module.exports = class extends Generator {
 
 		this.copyTpl('src/main/resources/application.yml',
 			'src/main/resources/application.yml');
+		this.copyTpl('src/main/resources/logback-spring.xml',
+			'src/main/resources/logback-spring.xml');
 
 		if (this.templateProperites.RDBMS !== 'None') {
 			this.copyTpl('src/main/resources/liquibase',
@@ -127,10 +129,8 @@ module.exports = class extends Generator {
 					this.copyTpl('src/main/scala/apppackage/config/JWTMemSecurityConfig.scala',
 						'src/main/scala/' + this.packagedir + '/config/SecurityConfig.scala');
 				}
-				this.copyTpl('src/main/scala/apppackage/web/rest/vm/user/LoginVM.scala',
-					'src/main/scala/' + this.packagedir + '/web/rest/vm/user/LoginVM.scala');
-				this.copyTpl('src/main/scala/apppackage/web/rest/vm/user/LoginResponseVM.scala',
-					'src/main/scala/' + this.packagedir + '/web/rest/vm/user/LoginResponseVM.scala');
+				this.copyTpl('src/main/scala/apppackage/web/rest/vm/user/Login.scala',
+					'src/main/scala/' + this.packagedir + '/web/rest/vm/user/Login.scala');
 				this.copyTpl('src/main/scala/apppackage/web/rest/UsersController.scala',
 					'src/main/scala/' + this.packagedir + '/web/rest/UsersController.scala');
 				
