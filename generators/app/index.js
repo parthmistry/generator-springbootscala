@@ -25,14 +25,14 @@ module.exports = class extends Generator {
 		return this.prompt([ {
 			type : 'input',
 			name : 'name',
-			message : 'Tell us your project name',
+			message : 'What is name of your project?',
 			default : this.appname,
 			validate : input => /^([a-zA-Z0-9]*)$/.test(input) ? true : "Special characters are not allowed"
 		},
 			{
 				type : 'input',
 				name : 'package',
-				message : 'Let us know the package name you want for your project',
+				message : 'What is your default scala package name?',
 				default : 'com.' + this.appname,
 				validate : input => /^([a-z_]{1}[a-z0-9_]*(\.[a-z_]{1}[a-z0-9_]*)*)$/.test(input) ? true : "Please provide valid package name"
 			},
@@ -59,8 +59,14 @@ module.exports = class extends Generator {
 			},
 			{
 				type : 'confirm',
+				name : 'elasticsearch',
+				message : 'Do you want to add configuration for elasticsearch?',
+				default : false
+			},
+			{
+				type : 'confirm',
 				name : 'docker',
-				message : 'Do you want to generate docker configuration?',
+				message : 'Do you want to add configuration for docker?',
 				default : false
 			} ]).then((answers) => {
 			this.userinput = answers;
@@ -73,6 +79,7 @@ module.exports = class extends Generator {
 				PACKAGE : this.userinput.package,
 				RDBMS : this.userinput.rdbms,
 				AUTH : this.userinput.auth,
+				ELASTICSEARCH : this.userinput.elasticsearch,
 				DOCKER : this.userinput.docker,
 				SCALA_VERSION : this.userinput.scalaversion
 			};
@@ -86,6 +93,7 @@ module.exports = class extends Generator {
 		this.copy('gradle/wrapper/gradle-wrapper.jar', 'gradle/wrapper/gradle-wrapper.jar');
 		this.copy('gradle/wrapper/gradle-wrapper.properties', 'gradle/wrapper/gradle-wrapper.properties');
 		this.copyTpl('build.gradle', 'build.gradle');
+		this.copyTpl('gradle.properties', 'gradle.properties');
 		this.copyTpl('src/main/scala/apppackage/SpringbootscalaApplication.scala',
 			'src/main/scala/' + this.packagedir + '/' + this.capitalizedProjectName + 'Application.scala');
 		this.copyTpl('src/main/scala/apppackage/config/ApplicationProperties.scala',
@@ -140,6 +148,11 @@ module.exports = class extends Generator {
 					'src/main/scala/' + this.packagedir + '/security/jwt/TokenAuthenticationService.scala');
 				
 			}
+		}
+
+		if(this.userinput.elasticsearch) {
+			this.copyTpl('src/main/scala/apppackage/config/ESConfig.scala',
+				'src/main/scala/' + this.packagedir + '/config/ESConfig.scala');
 		}
 
 		if(this.userinput.docker) {

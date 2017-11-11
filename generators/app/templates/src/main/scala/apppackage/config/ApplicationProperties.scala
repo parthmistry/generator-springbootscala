@@ -7,5 +7,19 @@ import scala.beans.BeanProperty
 
 @ConfigurationProperties(value = "application", ignoreUnknownFields = false)
 class ApplicationProperties {
-    @BeanProperty var cors: CorsConfiguration = new CorsConfiguration
+
+    @BeanProperty var cors: CorsConfiguration = _<%if (ELASTICSEARCH) { %>
+
+    @BeanProperty var elasticsearch: ESProperties = _<% } %>
+
 }
+<%if (ELASTICSEARCH) { %>
+class ESProperties {
+
+    @BeanProperty
+    var clusterName: String = _
+
+    @BeanProperty
+    var targetUri: String = _
+
+}<% } %>

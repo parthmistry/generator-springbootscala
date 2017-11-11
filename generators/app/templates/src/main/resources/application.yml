@@ -5,7 +5,10 @@ application:
     allowed-headers: "*"
     exposed-headers:
     allow-credentials: true
-    max-age: 1800
+    max-age: 1800<% if (ELASTICSEARCH) { %>
+  elasticsearch:
+    targetUri: elasticsearch://localhost:9300
+    clusterName: elasticsearch<% } %>
 
 <% if (RDBMS !== 'None') { %>
 spring:
