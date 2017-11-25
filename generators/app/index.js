@@ -142,6 +142,8 @@ module.exports = class extends Generator {
 				this.copyTpl('src/main/scala/apppackage/web/rest/UsersController.scala',
 					'src/main/scala/' + this.packagedir + '/web/rest/UsersController.scala');
 				
+				this.copyTpl('src/main/scala/apppackage/security/SecurityConstants.scala',
+					'src/main/scala/' + this.packagedir + '/security/SecurityConstants.scala');
 				this.copyTpl('src/main/scala/apppackage/security/jwt/JWTAuthenticationFilter.scala',
 					'src/main/scala/' + this.packagedir + '/security/jwt/JWTAuthenticationFilter.scala');
 				this.copyTpl('src/main/scala/apppackage/security/jwt/TokenAuthenticationService.scala',

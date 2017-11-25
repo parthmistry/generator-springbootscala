@@ -9,7 +9,7 @@ class SampleService {
   private val log = LoggerFactory.getLogger(classOf[SampleService])
 
   def sayHello(name: String) : String = {
-    log.trace("inside sayHello()")
-    "Hello " + name
+    log.debug("inside sayHello()")
+    s"Hello $name"
   }
 }

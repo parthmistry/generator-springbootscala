@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
-    <logger name="<%= PACKAGE %>" level="DEBUG" />
+    <logger name="<%= PACKAGE %>" level="WARN" />
     <springProfile name="dev">
-        <logger name="<%= PACKAGE %>" level="TRACE" />
+        <logger name="<%= PACKAGE %>" level="DEBUG" />
     </springProfile>
 </configuration>

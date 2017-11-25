@@ -17,7 +17,7 @@ class JWTUserDetailService @Autowired() (private val userRepository: UserReposit
   private val log = LoggerFactory.getLogger(classOf[JWTUserDetailService])
 
   override def loadUserByUsername(username: String): UserDetails = {
-    log.trace("inside loadUserByUsername()")
+    log.debug("inside loadUserByUsername()")
     userRepository.findOneWithAuthoritiesByUsername(username).map(user =>
       new User(username, user.passwordHash, user.authorities.asScala.map(authority => new SimpleGrantedAuthority(authority.getName)).asJava))
       .getOrElse(throw new UserPrincipalNotFoundException("User not found."))
