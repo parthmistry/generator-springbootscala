@@ -15,7 +15,7 @@ services:
     environment:
       - MYSQL_USER=root
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=<%= NAME %>db
+      - MYSQL_DATABASE=<%= NAME.toLowerCase() %>db
     ports:
       - 3306:3306<% } %><% if (ELASTICSEARCH) { %>
   <%= NAME.toLowerCase() %>-elasticsearch:
