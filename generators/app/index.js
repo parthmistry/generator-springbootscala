@@ -70,7 +70,7 @@ module.exports = class extends Generator {
 				default : false
 			} ]).then((answers) => {
 			this.userinput = answers;
-			this.packagedir = answers.package.replace(".", "/"),
+			this.packagedir = answers.package.replace(/\./g, "/"),
 			this.capitalizedProjectName = this.userinput.name.charAt(0).toUpperCase() + this.userinput.name.slice(1)
 
 			this.templateProperites = {

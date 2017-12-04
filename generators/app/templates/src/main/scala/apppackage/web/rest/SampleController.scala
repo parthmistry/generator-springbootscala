@@ -2,9 +2,9 @@ package <%= PACKAGE %>.web.rest
 
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import <%= PACKAGE%>.service.SampleService<% if(AUTH === 'JWT') { %>
 import <%= PACKAGE%>.security.SecurityConstants
-import <%= PACKAGE%>.service.SampleService
-import org.springframework.security.access.annotation.Secured
+import org.springframework.security.access.annotation.Secured<% } %>
 import org.springframework.web.bind.annotation.{RequestMapping, RequestParam, RestController}
 
 @RestController

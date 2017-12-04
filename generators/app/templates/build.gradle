@@ -42,9 +42,9 @@ dependencies {
 
 <% if (DOCKER) {%>task buildDocker(type: Exec) {
 	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-		commandLine 'cmd', '/c', 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME %>', '.'
+		commandLine 'cmd', '/c', 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME.toLowerCase() %>', '.'
 	} else {
-		commandLine 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME %>', '.'
+		commandLine 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME.toLowerCase() %>', '.'
 	}
 }
 

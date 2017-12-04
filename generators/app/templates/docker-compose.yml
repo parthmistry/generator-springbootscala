@@ -1,16 +1,16 @@
 version: "3"
 services:
-  <%= NAME %>-app:
-    image: <%= NAME %>
+  <%= NAME.toLowerCase() %>-app:
+    image: <%= NAME.toLowerCase() %>
     environment:
       - SPRING_PROFILES_ACTIVE=prod<% if (RDBMS === 'Mysql') { %>
-      - SPRING_DATASOURCE_URL=jdbc:mysql://<%= NAME %>-mysql:3306/<%= NAME %>db
+      - SPRING_DATASOURCE_URL=jdbc:mysql://<%= NAME.toLowerCase() %>-mysql:3306/<%= NAME.toLowerCase() %>db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=<% } %><% if (ELASTICSEARCH) { %>
-      - APPLICATION_ELASTICSEARCH_TARGETURI=elasticsearch://<%= NAME %>-elasticsearch:9300<% } %>
+      - APPLICATION_ELASTICSEARCH_TARGETURI=elasticsearch://<%= NAME.toLowerCase() %>-elasticsearch:9300<% } %>
     ports:
       - 8080:8080<% if (RDBMS === 'Mysql') { %>
-  <%= NAME %>-mysql:
+  <%= NAME.toLowerCase() %>-mysql:
     image: mysql:5.7
     environment:
       - MYSQL_USER=root
@@ -18,7 +18,7 @@ services:
       - MYSQL_DATABASE=<%= NAME %>db
     ports:
       - 3306:3306<% } %><% if (ELASTICSEARCH) { %>
-  <%= NAME %>-elasticsearch:
+  <%= NAME.toLowerCase() %>-elasticsearch:
     image: elasticsearch:5.6.4
     environment:
       - cluster.name=elasticsearch
