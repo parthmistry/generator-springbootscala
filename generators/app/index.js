@@ -163,6 +163,11 @@ module.exports = class extends Generator {
 			this.copyTpl('docker-compose.yml',
 				'docker-compose.yml');
 		}
+
+		if (this.templateProperites.AUTH === 'None') {
+			this.copyTpl('src/test/scala/apppackage/noauth/SampleControllerTests.scala',
+				'src/test/scala/' + this.packagedir + '/SampleControllerTests.scala');
+		}
 	}
 
 };

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.client.RestTemplate
 import org.springframework.web.servlet.config.annotation.{WebMvcConfigurationSupport, EnableWebMvc, WebMvcConfigurerAdapter}
 import collection.JavaConverters._
 
@@ -28,7 +29,7 @@ class WebConfig @Autowired()(private val applicationProperties: ApplicationPrope
             registerModule(DefaultScalaModule)
         }
 
-override def addCorsMappings(registry: CorsRegistry) = {
+    override def addCorsMappings(registry: CorsRegistry) = {
         registry.addMapping("/api/**")
           .allowedOrigins(applicationProperties.cors.getAllowedOrigins.asScala:_*)
           .allowedMethods(applicationProperties.cors.getAllowedMethods.asScala:_*)
@@ -36,4 +37,6 @@ override def addCorsMappings(registry: CorsRegistry) = {
           .exposedHeaders(applicationProperties.cors.getExposedHeaders.asScala:_*)
           .allowCredentials(true).maxAge(1800)
     }
+
+    @Bean def restTemplate = new RestTemplate
 }

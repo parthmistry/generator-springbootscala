@@ -35,7 +35,8 @@ dependencies {
 	compile "org.elasticsearch:elasticsearch:${elasticsearch_version}"
 	compile "com.sksamuel.elastic4s:elastic4s-core_${scala_version}:${elastic4s_version}"
 	compile "com.sksamuel.elastic4s:elastic4s-tcp_${scala_version}:${elastic4s_version}"<% } %>
-	testCompile 'org.springframework.boot:spring-boot-starter-test'<% if (ELASTICSEARCH) { %>
+	testCompile "org.springframework.boot:spring-boot-starter-test"
+	testCompile "com.h2database:h2:1.4.196"<% if (ELASTICSEARCH) { %>
 	testCompile "com.sksamuel.elastic4s:elastic4s-testkit_${scala_version}:${elastic4s_version}"
 	testCompile "com.sksamuel.elastic4s:elastic4s-embedded_${scala_version}:${elastic4s_version}"<% } %>
 }
