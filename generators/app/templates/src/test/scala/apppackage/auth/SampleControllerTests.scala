@@ -3,10 +3,9 @@ package <%= PACKAGE %>
 import org.junit.{Assert, Test}
 import org.junit.runner.RunWith
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.{HttpEntity, HttpMethod}
 import org.springframework.test.context.junit4.SpringRunner
-import org.springframework.web.client.RestTemplate
 
 @RunWith(value = classOf[SpringRunner])
 @SpringBootTest(classes = Array(classOf[<%= CAPITALIZED_NAME %>Conf]), webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -18,7 +17,8 @@ class SampleControllerTests extends AbstractTests {
   def sampleTest(): Unit = {
     log.debug("inside sampleTest()")
     val name = "User"
-    val response = restTemplate.getForObject(s"$API_BASE_URL/sample?name=$name", classOf[String])
+    val requestEntity = new HttpEntity[String](getHeadersWithAuth)
+    val response = restTemplate.exchange(s"$API_BASE_URL/sample?name=$name", HttpMethod.GET, requestEntity, classOf[String]).getBody
     Assert.assertEquals(s"Hello $name", response)
   }
 }

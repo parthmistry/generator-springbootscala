@@ -23,7 +23,7 @@ class WebConfig @Autowired()(private val applicationProperties: ApplicationPrope
     def jackson2HttpMessageConverter(): MappingJackson2HttpMessageConverter =
         new MappingJackson2HttpMessageConverter(objectMapper())
 
-    def objectMapper(): ObjectMapper =
+    @Bean def objectMapper(): ObjectMapper =
         new ObjectMapper() {
             setVisibility(PropertyAccessor.FIELD, Visibility.ANY)
             registerModule(DefaultScalaModule)

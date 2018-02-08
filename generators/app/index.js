@@ -164,10 +164,14 @@ module.exports = class extends Generator {
 				'docker-compose.yml');
 		}
 
-		if (this.templateProperites.AUTH === 'None') {
-			this.copyTpl('src/test/scala/apppackage/noauth/SampleControllerTests.scala',
-				'src/test/scala/' + this.packagedir + '/SampleControllerTests.scala');
-		}
+		const testDir = (this.templateProperites.AUTH === 'None') ? "noauth" : "auth";
+
+		this.copyTpl('src/test/scala/apppackage/' + testDir + '/AbstractTests.scala',
+			'src/test/scala/' + this.packagedir + '/AbstractTests.scala');
+		this.copyTpl('src/test/scala/apppackage/' + testDir + '/SampleControllerTests.scala',
+			'src/test/scala/' + this.packagedir + '/SampleControllerTests.scala');
+		this.copyTpl('src/test/resources',
+			'src/test/resources');
 	}
 
 };
