@@ -7,8 +7,7 @@ application:
     allow-credentials: true
     max-age: 1800<% if (ELASTICSEARCH) { %>
   elasticsearch:
-    targetUri: elasticsearch://localhost:9300
-    clusterName: elasticsearch<% } %>
+    targetUri: elasticsearch://localhost:9200<% } %>
 
 <% if (AUTH === 'JWT') { %>jwt:
   secretKey: secret-key-changeit
@@ -29,7 +28,6 @@ application:
           naming:
             implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
-liquibase:
-  change-log: classpath:liquibase/master.xml
+  liquibase:
+    change-log: classpath:liquibase/master.xml
 <% } %>

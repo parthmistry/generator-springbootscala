@@ -6,6 +6,7 @@ import <%= PACKAGE %>.security.jwt.{JWTAuthenticationFilter, TokenAuthentication
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.http.HttpMethod
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.{HttpSecurity, WebSecurity}
@@ -30,6 +31,9 @@ class SecurityConfig @Autowired()(tokenAuthenticationService: TokenAuthenticatio
     web.ignoring()
       .antMatchers(HttpMethod.OPTIONS, "/api/**")
   }
+
+  @Bean
+  override def authenticationManager(): AuthenticationManager = super.authenticationManager()
 
   override def configure(http: HttpSecurity): Unit = {
     http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

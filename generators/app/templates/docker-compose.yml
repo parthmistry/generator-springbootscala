@@ -7,7 +7,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://<%= NAME.toLowerCase() %>-mysql:3306/<%= NAME.toLowerCase() %>db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=<% } %><% if (ELASTICSEARCH) { %>
-      - APPLICATION_ELASTICSEARCH_TARGETURI=elasticsearch://<%= NAME.toLowerCase() %>-elasticsearch:9300<% } %>
+      - APPLICATION_ELASTICSEARCH_TARGETURI=elasticsearch://<%= NAME.toLowerCase() %>-elasticsearch:9200<% } %>
     ports:
       - 8080:8080<% if (RDBMS === 'Mysql') { %>
   <%= NAME.toLowerCase() %>-mysql:
@@ -19,7 +19,7 @@ services:
     ports:
       - 3306:3306<% } %><% if (ELASTICSEARCH) { %>
   <%= NAME.toLowerCase() %>-elasticsearch:
-    image: elasticsearch:5.6.4
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
     environment:
       - cluster.name=elasticsearch
       - discovery.type=single-node
@@ -28,5 +28,4 @@ services:
       - elasticsearch
       - -Etransport.host=0.0.0.0
     ports:
-      - 9200:9200
-      - 9300:9300<% } %>
+      - 9200:9200<% } %>

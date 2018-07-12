@@ -17,9 +17,6 @@ class ApplicationProperties {
 class ESProperties {
 
     @BeanProperty
-    var clusterName: String = _
-
-    @BeanProperty
     var targetUri: String = _
 
 }<% } %>

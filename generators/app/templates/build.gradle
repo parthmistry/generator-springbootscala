@@ -1,7 +1,7 @@
 <% if (DOCKER) {%>import org.apache.tools.ant.taskdefs.condition.Os<% } %>
 buildscript {
 	ext {
-		springBootVersion = '1.5.8.RELEASE'
+		springBootVersion = '2.0.3.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -14,10 +14,11 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = <%= (SCALA_VERSION === '2.11') ? 8 : 10 %>
+targetCompatibility = <%= (SCALA_VERSION === '2.11') ? 8 : 10 %>
 
 repositories {
 	mavenCentral()
@@ -34,14 +35,19 @@ dependencies {
 	compile "com.fasterxml.jackson.module:jackson-module-scala_${scala_version}:${jackson_version}"<% if (ELASTICSEARCH) { %>
 	compile "org.elasticsearch:elasticsearch:${elasticsearch_version}"
 	compile "com.sksamuel.elastic4s:elastic4s-core_${scala_version}:${elastic4s_version}"
-	compile "com.sksamuel.elastic4s:elastic4s-tcp_${scala_version}:${elastic4s_version}"<% } %>
+	compile "com.sksamuel.elastic4s:elastic4s-http_${scala_version}:${elastic4s_version}"<% } %>
+	compile 'javax.xml.bind:jaxb-api:2.3.0'
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 	testCompile "com.h2database:h2:1.4.196"<% if (ELASTICSEARCH) { %>
-	testCompile "com.sksamuel.elastic4s:elastic4s-testkit_${scala_version}:${elastic4s_version}"
-	testCompile "com.sksamuel.elastic4s:elastic4s-embedded_${scala_version}:${elastic4s_version}"<% } %>
+	testCompile ("com.sksamuel.elastic4s:elastic4s-testkit_${scala_version}:${elastic4s_version}") {
+		exclude group: 'org.apache.logging.log4j'
+	}
+	testCompile ("com.sksamuel.elastic4s:elastic4s-embedded_${scala_version}:${elastic4s_version}") {
+		exclude group: 'org.apache.logging.log4j'
+	}<% } %>
 }
 
-<% if (DOCKER) {%>task buildDocker(type: Exec) {
+<% if (DOCKER) {%>task buildDocker(type: Exec, dependsOn: build) {
 	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 		commandLine 'cmd', '/c', 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME.toLowerCase() %>', '.'
 	} else {
