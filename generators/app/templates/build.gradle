@@ -1,14 +1,14 @@
 <% if (DOCKER) {%>import org.apache.tools.ant.taskdefs.condition.Os<% } %>
 buildscript {
-	ext {
-		springBootVersion = '2.0.3.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+  ext {
+    springBootVersion = '2.1.3.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
 }
 
 apply plugin: 'scala'
@@ -17,56 +17,56 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = <%= (SCALA_VERSION === '2.11') ? 8 : 10 %>
-targetCompatibility = <%= (SCALA_VERSION === '2.11') ? 8 : 10 %>
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
-	mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-	compile "org.scala-lang:scala-library:${scala_full_version}"
-	compile "org.springframework.boot:spring-boot-starter-web"<% if (RDBMS !== 'None') { %>
-	compile "org.springframework.boot:spring-boot-starter-data-jpa"
-	compile "org.liquibase:liquibase-core:3.5.3"
-	<% if (RDBMS === 'Mysql') { %>compile "mysql:mysql-connector-java:5.1.6"<% } %><% } %><% if (AUTH !== 'None') { %>
-	compile "org.springframework.boot:spring-boot-starter-security"
-	<% if (AUTH === 'JWT') { %>compile "io.jsonwebtoken:jjwt:0.7.0"<% } %><% } %>
-	compile "com.fasterxml.jackson.module:jackson-module-scala_${scala_version}:${jackson_version}"<% if (ELASTICSEARCH) { %>
-	compile "org.elasticsearch:elasticsearch:${elasticsearch_version}"
-	compile "com.sksamuel.elastic4s:elastic4s-core_${scala_version}:${elastic4s_version}"
-	compile "com.sksamuel.elastic4s:elastic4s-http_${scala_version}:${elastic4s_version}"<% } %>
-	compile 'javax.xml.bind:jaxb-api:2.3.0'
-	testCompile "org.springframework.boot:spring-boot-starter-test"
-	testCompile "com.h2database:h2:1.4.196"<% if (ELASTICSEARCH) { %>
-	testCompile ("com.sksamuel.elastic4s:elastic4s-testkit_${scala_version}:${elastic4s_version}") {
-		exclude group: 'org.apache.logging.log4j'
-	}
-	testCompile ("com.sksamuel.elastic4s:elastic4s-embedded_${scala_version}:${elastic4s_version}") {
-		exclude group: 'org.apache.logging.log4j'
-	}<% } %>
+  compile "org.scala-lang:scala-library:${scala_full_version}"
+  compile "org.springframework.boot:spring-boot-starter-web"<% if (RDBMS !== 'None') { %>
+  compile "org.springframework.boot:spring-boot-starter-data-jpa"
+  compile "org.liquibase:liquibase-core:3.6.3"
+  <% if (RDBMS === 'Mysql') { %>compile "mysql:mysql-connector-java:6.0.6"<% } %><% } %><% if (AUTH !== 'None') { %>
+  compile "org.springframework.boot:spring-boot-starter-security"
+  <% if (AUTH === 'JWT') { %>compile "io.jsonwebtoken:jjwt:0.7.0"<% } %><% } %>
+  compile "com.fasterxml.jackson.module:jackson-module-scala_${scala_version}:${jackson_version}"<% if (ELASTICSEARCH) { %>
+  compile "org.elasticsearch:elasticsearch:${elasticsearch_version}"
+  compile "com.sksamuel.elastic4s:elastic4s-core_${scala_version}:${elastic4s_version}"
+  compile "com.sksamuel.elastic4s:elastic4s-http_${scala_version}:${elastic4s_version}"<% } %>
+  compile 'javax.xml.bind:jaxb-api:2.3.0'
+  testCompile "org.springframework.boot:spring-boot-starter-test"
+  testCompile "com.h2database:h2:1.4.196"<% if (ELASTICSEARCH) { %>
+  testCompile ("com.sksamuel.elastic4s:elastic4s-testkit_${scala_version}:${elastic4s_version}") {
+    exclude group: 'org.apache.logging.log4j'
+  }
+  testCompile ("com.sksamuel.elastic4s:elastic4s-embedded_${scala_version}:${elastic4s_version}") {
+    exclude group: 'org.apache.logging.log4j'
+  }<% } %>
 }
 
 <% if (DOCKER) {%>task buildDocker(type: Exec, dependsOn: build) {
-	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-		commandLine 'cmd', '/c', 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME.toLowerCase() %>', '.'
-	} else {
-		commandLine 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME.toLowerCase() %>', '.'
-	}
+  if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    commandLine 'cmd', '/c', 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME.toLowerCase() %>', '.'
+  } else {
+    commandLine 'docker', 'build', '-f', './Dockerfile', '-t', '<%= NAME.toLowerCase() %>', '.'
+  }
 }
 
 task startDocker(type: Exec) {
-	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-		commandLine 'cmd', '/c', 'docker-compose', '-f', './docker-compose.yml', 'up', '-d'
-	} else {
-		commandLine 'docker-compose', '-f', './docker-compose.yml', 'up', '-d'
-	}
+  if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    commandLine 'cmd', '/c', 'docker-compose', '-f', './docker-compose.yml', 'up', '-d'
+  } else {
+    commandLine 'docker-compose', '-f', './docker-compose.yml', 'up', '-d'
+  }
 }
 
 task stopDocker(type: Exec) {
-	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-		commandLine 'cmd', '/c', 'docker-compose', '-f', './docker-compose.yml', 'down'
-	} else {
-		commandLine 'docker-compose', '-f', './docker-compose.yml', 'down'
-	}
+  if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    commandLine 'cmd', '/c', 'docker-compose', '-f', './docker-compose.yml', 'down'
+  } else {
+    commandLine 'docker-compose', '-f', './docker-compose.yml', 'down'
+  }
 }<% } %>

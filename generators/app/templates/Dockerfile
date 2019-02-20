@@ -1,4 +1,4 @@
-FROM openjdk:<%= (SCALA_VERSION === '2.11') ? '8-jre-alpine' : '10-jre-slim' %>
+FROM openjdk:11-jre-stretch
 
 ENV JAVA_OPTS=""
 

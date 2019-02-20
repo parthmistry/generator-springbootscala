@@ -15,9 +15,7 @@
             <column name="password_hash" type="varchar(60)"/>
             <column name="first_name" type="varchar(50)"/>
             <column name="last_name" type="varchar(50)"/>
-            <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
